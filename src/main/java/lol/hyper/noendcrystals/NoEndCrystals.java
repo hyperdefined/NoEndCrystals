@@ -7,41 +7,42 @@
 package lol.hyper.noendcrystals;
 
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
-import org.bukkit.Material;
-import org.bukkit.entity.Player;
-import org.bukkit.event.EventHandler;
-import org.bukkit.event.EventPriority;
+import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.event.Listener;
-import org.bukkit.event.block.Action;
-import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.plugin.java.JavaPlugin;
+
+import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
 public class NoEndCrystals extends JavaPlugin implements Listener {
 
+    private static NoEndCrystals instance;
+    FileConfiguration config = this.getConfig();
+    File configFile = new File("plugins/NoEndCrystals/config.yml");
+    List<String> defaultWorlds = new ArrayList<>();
+
+    public static NoEndCrystals getInstance() {
+        return instance;
+    }
+
     @Override
     public void onEnable() {
-        Bukkit.getServer().getPluginManager().registerEvents(this, this);
+        instance = this;
+        Bukkit.getServer().getPluginManager().registerEvents(new EndCrystalChecker(), this);
+        this.getCommand("noendcrystals").setExecutor(new CommandReload());
         Bukkit.getLogger().info("[NoEndCrystals] Plugin created by hyperdefined.");
+        defaultWorlds.add("world1");
+        defaultWorlds.add("world2");
+        defaultWorlds.add("world3");
+        config.addDefault("disabled_worlds", defaultWorlds.toArray());
+        config.addDefault("message", "&cEnd Crystals are disabled in this world.");
+        config.options().copyDefaults(true);
+        this.saveConfig();
     }
 
     @Override
     public void onDisable() {
 
-    }
-
-    @EventHandler(priority = EventPriority.HIGHEST)
-    public void onPlayerInteract(final PlayerInteractEvent event) {
-        Player player = event.getPlayer();
-        if (Action.RIGHT_CLICK_BLOCK == event.getAction()) {
-            if (event.getClickedBlock().getType().equals(Material.OBSIDIAN) || event.getClickedBlock().getType().equals(Material.BEDROCK)) {
-                if (Material.END_CRYSTAL == event.getMaterial()) {
-                    if (!player.getWorld().getName().equals("world_the_end")) {
-                        event.setCancelled(true);
-                        player.sendMessage(ChatColor.RED + "End Crystals are only enabled in The End.");
-                    }
-                }
-            }
-        }
     }
 }
