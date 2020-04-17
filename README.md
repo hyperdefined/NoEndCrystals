@@ -1,6 +1,7 @@
 # NoEndCrystals
-Only allow end crystal placement in The End.
+Disable placement of End Crystals in certain worlds.
 
 # Features
-- Block end crystal placement in the Overworld and Nether.
-- Allow end crystals in the End only.
+- Set custom worlds to disable placement of end crystals.
+Set custom message for when a player tries to place a crystal in a disabled world.
+- `/noendcrystals reload` to reload configuration.
