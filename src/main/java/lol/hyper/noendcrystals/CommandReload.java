@@ -14,7 +14,7 @@ public class CommandReload implements CommandExecutor {
         } else if (strings[0].equalsIgnoreCase("reload")) {
             if (commandSender.hasPermission("noendcrystals.reload")) {
                 NoEndCrystals.getInstance().config = YamlConfiguration.loadConfiguration(NoEndCrystals.getInstance().configFile);
-                commandSender.sendMessage(ChatColor.GREEN + "Configuration reload.");
+                commandSender.sendMessage(ChatColor.GREEN + "Configuration reloaded!");
             } else {
                 commandSender.sendMessage(ChatColor.RED + "You do not have permission for this command.");
             }
