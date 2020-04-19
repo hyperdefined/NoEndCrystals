@@ -7,3 +7,7 @@ commands:
   noendcrystals:
     usage: /noendcrystals
     description: Main command.
+permissions:
+  noendcrystals.reload:
+    description: Reload configuration.
+    default: op
