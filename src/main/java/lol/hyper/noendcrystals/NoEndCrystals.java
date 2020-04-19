@@ -29,6 +29,7 @@ public class NoEndCrystals extends JavaPlugin implements Listener {
     @Override
     public void onEnable() {
         instance = this;
+        MetricsLite metricsLite = new MetricsLite(this, 7230);
         Bukkit.getServer().getPluginManager().registerEvents(new EndCrystalChecker(), this);
         this.getCommand("noendcrystals").setExecutor(new CommandReload());
         Bukkit.getLogger().info("[NoEndCrystals] Plugin created by hyperdefined.");
