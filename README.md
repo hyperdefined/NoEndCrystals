@@ -1,4 +1,6 @@
 # NoEndCrystals
+[![Downloads](https://img.shields.io/github/downloads/hyperdefined/NoEndCrystals/total?logo=github)](https://github.com/hyperdefined/NoEndCrystals/releases)
+
 Disable placement of End Crystals in certain worlds.
 
 **Java 11+ is required.**
