@@ -3,8 +3,6 @@
 
 Disable placement of End Crystals in certain worlds.
 
-**Java 11+ is required.**
-
 ## Features
 - Set custom worlds to disable placement of end crystals.
 - Set custom message for when a player tries to place a crystal in a disabled world.
@@ -12,7 +10,7 @@ Disable placement of End Crystals in certain worlds.
 
 ## Configuration
 This is the default configuration.
-```
+```yaml
 disabled_worlds:
 - world1
 - world2
