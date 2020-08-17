@@ -6,11 +6,11 @@
 
     <groupId>lol.hyper</groupId>
     <artifactId>noendcrystals</artifactId>
-    <version>1.1</version>
+    <version>1.2</version>
     <packaging>jar</packaging>
 
     <properties>
-        <java.version>14</java.version>
+        <java.version>1.8</java.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
