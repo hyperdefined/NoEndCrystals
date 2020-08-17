@@ -1,0 +1,5 @@
+disabled_worlds:
+  - world1
+  - world2
+  - world3
+message: '&cEnd Crystals are disabled in this world.'

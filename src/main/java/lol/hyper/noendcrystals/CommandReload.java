@@ -13,7 +13,7 @@ public class CommandReload implements CommandExecutor {
             commandSender.sendMessage(ChatColor.BLUE + "NoEndCystals was created by hyperdefined.");
         } else if (strings[0].equalsIgnoreCase("reload")) {
             if (commandSender.hasPermission("noendcrystals.reload")) {
-                NoEndCrystals.getInstance().config = YamlConfiguration.loadConfiguration(NoEndCrystals.getInstance().configFile);
+                NoEndCrystals.getInstance().loadConfig(NoEndCrystals.getInstance().configFile);
                 commandSender.sendMessage(ChatColor.GREEN + "Configuration reloaded!");
             } else {
                 commandSender.sendMessage(ChatColor.RED + "You do not have permission for this command.");
