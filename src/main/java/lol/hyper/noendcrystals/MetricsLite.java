@@ -1,3 +1,20 @@
+/*
+ * This file is part of NoEndCrystals.
+ *
+ * NoEndCrystals is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * NoEndCrystals is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with NoEndCrystals.  If not, see <https://www.gnu.org/licenses/>.
+ */
+
 package lol.hyper.noendcrystals;
 
 import com.google.gson.JsonArray;
@@ -23,9 +40,8 @@ import java.util.UUID;
 import java.util.logging.Level;
 import java.util.zip.GZIPOutputStream;
 
-/**
+/*
  * bStats collects some data for plugin authors.
- * <p>
  * Check out https://bStats.org/ to learn more about bStats!
  */
 @SuppressWarnings({"WeakerAccess", "unused"})
