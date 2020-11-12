@@ -28,7 +28,7 @@ import org.bukkit.event.player.PlayerInteractEvent;
 
 public class EndCrystalChecker implements Listener {
 
-    private NoEndCrystals noEndCrystals;
+    private final NoEndCrystals noEndCrystals;
 
     public EndCrystalChecker(NoEndCrystals noEndCrystals) {
         this.noEndCrystals = noEndCrystals;

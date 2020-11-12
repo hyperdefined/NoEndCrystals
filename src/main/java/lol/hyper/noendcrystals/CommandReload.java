@@ -27,7 +27,7 @@ import java.util.List;
 
 public class CommandReload implements TabExecutor {
 
-    private NoEndCrystals noEndCrystals;
+    private final NoEndCrystals noEndCrystals;
 
     public CommandReload(NoEndCrystals noEndCrystals) {
         this.noEndCrystals = noEndCrystals;
