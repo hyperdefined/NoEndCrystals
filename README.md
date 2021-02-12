@@ -3,4 +3,5 @@
 
 NoEndCrystals allows you to disable placement of End Crystals in certain worlds.
 
-[Documentation and more info](https://hyper.lol/minecraft-plugins/noendcrystals/).
+- [Documentation and more info](https://hyper.lol/minecraft-plugins/noendcrystals/).
+- [SpigotMC Page](https://www.spigotmc.org/resources/noendcrystals.77559/).
