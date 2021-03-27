@@ -48,11 +48,6 @@ public class NoEndCrystals extends JavaPlugin implements Listener {
         MetricsLite metricsLite = new MetricsLite(this, 7230);
     }
 
-    @Override
-    public void onDisable() {
-
-    }
-
     public void loadConfig(File file) {
         config = YamlConfiguration.loadConfiguration(file);
     }

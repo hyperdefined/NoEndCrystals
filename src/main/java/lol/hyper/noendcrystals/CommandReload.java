@@ -44,8 +44,8 @@ public class CommandReload implements TabExecutor {
             } else {
                 commandSender.sendMessage(ChatColor.RED + "You do not have permission for this command.");
             }
-        } else if (strings[0].equalsIgnoreCase("worlds")){
-            List<String> worlds = noEndCrystals.config.getStringList("disabled_worlds");
+        } else if (strings[0].equalsIgnoreCase("worlds")) {
+            List < String > worlds = noEndCrystals.config.getStringList("disabled_worlds");
             commandSender.sendMessage(ChatColor.GREEN + "End Crystals cannot be placed in these world(s):");
             commandSender.sendMessage(ChatColor.BLUE + String.join(", ", worlds));
         } else {
@@ -55,7 +55,7 @@ public class CommandReload implements TabExecutor {
     }
 
     @Override
-    public List<String> onTabComplete(CommandSender sender, Command command, String alias, String[] args) {
+    public List < String > onTabComplete(CommandSender sender, Command command, String alias, String[] args) {
         return Arrays.asList("reload", "worlds");
     }
 }
