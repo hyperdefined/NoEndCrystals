@@ -19,6 +19,7 @@ package lol.hyper.noendcrystals;
 
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
+import org.bukkit.World;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -34,13 +35,20 @@ public class EndCrystalChecker implements Listener {
         this.noEndCrystals = noEndCrystals;
     }
 
+    private boolean allow(World world) {
+        boolean allow = noEndCrystals.config.getStringList("worlds").contains(world.getName());
+        return noEndCrystals.config.getBoolean("whitelist", true) == allow;
+    }
+
     @EventHandler(priority = EventPriority.HIGHEST)
     public void onPlayerInteract(final PlayerInteractEvent event) {
         Player player = event.getPlayer();
         if (Action.RIGHT_CLICK_BLOCK == event.getAction()) {
+            if (event.getClickedBlock() == null)
+                return;
             if (event.getClickedBlock().getType().equals(Material.OBSIDIAN) || event.getClickedBlock().getType().equals(Material.BEDROCK)) {
                 if (Material.END_CRYSTAL == event.getMaterial()) {
-                    if (noEndCrystals.config.getStringList("disabled_worlds").contains(player.getWorld().getName())) {
+                    if (!allow(player.getWorld())) {
                         event.setCancelled(true);
                         player.sendMessage(ChatColor.translateAlternateColorCodes('&', noEndCrystals.config.get("message").toString()));
                     }
