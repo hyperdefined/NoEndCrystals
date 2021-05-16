@@ -1,3 +1,6 @@
+# Toggle white/black list for limiting End Crystals.
+# True: End Crystals are allowed in these worlds only.
+# False: End Crystals are not allowed in these worlds.
 whitelist: true
 worlds:
   - world1
