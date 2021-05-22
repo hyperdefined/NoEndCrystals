@@ -140,6 +140,6 @@ public class CommandMain implements TabExecutor {
 
     @Override
     public List < String > onTabComplete(CommandSender sender, Command command, String alias, String[] args) {
-        return Arrays.asList("reload", "worlds", "add", "remove");
+        return Arrays.asList("reload", "worlds", "add", "remove", "help");
     }
 }
