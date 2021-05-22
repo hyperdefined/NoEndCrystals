@@ -25,11 +25,11 @@ import org.bukkit.command.TabExecutor;
 import java.util.Arrays;
 import java.util.List;
 
-public class CommandReload implements TabExecutor {
+public class CommandMain implements TabExecutor {
 
     private final NoEndCrystals noEndCrystals;
 
-    public CommandReload(NoEndCrystals noEndCrystals) {
+    public CommandMain(NoEndCrystals noEndCrystals) {
         this.noEndCrystals = noEndCrystals;
     }
 

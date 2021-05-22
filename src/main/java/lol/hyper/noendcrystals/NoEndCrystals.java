@@ -17,6 +17,8 @@
 
 package lol.hyper.noendcrystals;
 
+import lol.hyper.noendcrystals.tools.EndCrystalChecker;
+import org.bstats.bukkit.Metrics;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -30,12 +32,12 @@ public class NoEndCrystals extends JavaPlugin implements Listener {
     public FileConfiguration config;
     public File configFile = new File(this.getDataFolder(), "config.yml");
 
-    public CommandReload commandReload;
+    public CommandMain commandReload;
     public EndCrystalChecker endCrystalChecker;
 
     @Override
     public void onEnable() {
-        commandReload = new CommandReload(this);
+        commandReload = new CommandMain(this);
         endCrystalChecker = new EndCrystalChecker(this);
         if (!configFile.exists()) {
             this.saveResource("config.yml", true);
@@ -45,7 +47,7 @@ public class NoEndCrystals extends JavaPlugin implements Listener {
         Bukkit.getServer().getPluginManager().registerEvents(endCrystalChecker, this);
         this.getCommand("noendcrystals").setExecutor(commandReload);
 
-        MetricsLite metricsLite = new MetricsLite(this, 7230);
+        Metrics metricsLite = new Metrics(this, 7230);
     }
 
     public void loadConfig(File file) {

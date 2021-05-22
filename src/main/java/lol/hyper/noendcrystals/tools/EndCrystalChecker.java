@@ -15,8 +15,9 @@
  * along with NoEndCrystals.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package lol.hyper.noendcrystals;
+package lol.hyper.noendcrystals.tools;
 
+import lol.hyper.noendcrystals.NoEndCrystals;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.World;
