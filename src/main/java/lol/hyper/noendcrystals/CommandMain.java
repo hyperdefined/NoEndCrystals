@@ -37,7 +37,8 @@ public class CommandMain implements TabExecutor {
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if (args.length == 0 || sender instanceof ConsoleCommandSender) {
-            sender.sendMessage(ChatColor.GREEN + "NoEndCrystals version " + noEndCrystals.getDescription().getVersion() + ". Created by hyperdefined.");
+            sender.sendMessage(ChatColor.GREEN + "NoEndCrystals version "
+                    + noEndCrystals.getDescription().getVersion() + ". Created by hyperdefined.");
             sender.sendMessage(ChatColor.GREEN + "Use /noendcrystals help for command help.");
             return true;
         }
@@ -56,11 +57,16 @@ public class CommandMain implements TabExecutor {
             case "help": {
                 sender.sendMessage(ChatColor.GOLD + "-----------------NoEndCrystals-----------------");
                 sender.sendMessage(ChatColor.GOLD + "/noendcrystals help " + ChatColor.YELLOW + "- Shows this menu.");
-                sender.sendMessage(ChatColor.GOLD + "/noendcrystals worlds " + ChatColor.YELLOW + "- Shows which worlds are enabled/disabled.");
-                sender.sendMessage(ChatColor.GOLD + "/noendcrystals add " + ChatColor.YELLOW + "- Adds a world to the list.");
-                sender.sendMessage(ChatColor.GOLD + "/noendcrystals remove " + ChatColor.YELLOW + "- Removes a world from the list.");
-                sender.sendMessage(ChatColor.GOLD + "/noendcrystals mode " + ChatColor.YELLOW + "- Change which mode to use.");
-                sender.sendMessage(ChatColor.GOLD + "/noendcrystals reload " + ChatColor.YELLOW + "- Reloads the configuration.");
+                sender.sendMessage(ChatColor.GOLD + "/noendcrystals worlds " + ChatColor.YELLOW
+                        + "- Shows which worlds are enabled/disabled.");
+                sender.sendMessage(
+                        ChatColor.GOLD + "/noendcrystals add " + ChatColor.YELLOW + "- Adds a world to the list.");
+                sender.sendMessage(ChatColor.GOLD + "/noendcrystals remove " + ChatColor.YELLOW
+                        + "- Removes a world from the list.");
+                sender.sendMessage(
+                        ChatColor.GOLD + "/noendcrystals mode " + ChatColor.YELLOW + "- Change which mode to use.");
+                sender.sendMessage(
+                        ChatColor.GOLD + "/noendcrystals reload " + ChatColor.YELLOW + "- Reloads the configuration.");
                 sender.sendMessage(ChatColor.GOLD + "--------------------------------------------");
                 break;
             }
@@ -125,21 +131,24 @@ public class CommandMain implements TabExecutor {
                 if (mode.equals("whitelist")) {
                     sender.sendMessage(ChatColor.GOLD + "End Crystals will only work in the specified worlds.");
                 } else {
-                    sender.sendMessage(ChatColor.GOLD + "End Crystals will work in all worlds besides the one(s) on the list.");
+                    sender.sendMessage(
+                            ChatColor.GOLD + "End Crystals will work in all worlds besides the one(s) on the list.");
                 }
-                sender.sendMessage(ChatColor.GOLD + "If you want to change the mode, simply do /noendcrystals mode <whitelist/blacklist>");
+                sender.sendMessage(ChatColor.GOLD
+                        + "If you want to change the mode, simply do /noendcrystals mode <whitelist/blacklist>");
                 sender.sendMessage(ChatColor.GOLD + "--------------------------------------------");
                 break;
             }
             default: {
-                sender.sendMessage(ChatColor.RED + "Unknown option. Please see /noendcrystals help for all valid options.");
+                sender.sendMessage(
+                        ChatColor.RED + "Unknown option. Please see /noendcrystals help for all valid options.");
             }
         }
         return true;
     }
 
     @Override
-    public List < String > onTabComplete(CommandSender sender, Command command, String alias, String[] args) {
+    public List<String> onTabComplete(CommandSender sender, Command command, String alias, String[] args) {
         return Arrays.asList("reload", "worlds", "add", "remove", "help");
     }
 }

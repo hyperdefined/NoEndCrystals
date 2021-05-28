@@ -45,13 +45,14 @@ public class EndCrystalChecker implements Listener {
     public void onPlayerInteract(final PlayerInteractEvent event) {
         Player player = event.getPlayer();
         if (Action.RIGHT_CLICK_BLOCK == event.getAction()) {
-            if (event.getClickedBlock() == null)
-                return;
-            if (event.getClickedBlock().getType().equals(Material.OBSIDIAN) || event.getClickedBlock().getType().equals(Material.BEDROCK)) {
+            if (event.getClickedBlock() == null) return;
+            if (event.getClickedBlock().getType().equals(Material.OBSIDIAN)
+                    || event.getClickedBlock().getType().equals(Material.BEDROCK)) {
                 if (Material.END_CRYSTAL == event.getMaterial()) {
                     if (!allow(player.getWorld())) {
                         event.setCancelled(true);
-                        player.sendMessage(ChatColor.translateAlternateColorCodes('&', noEndCrystals.config.get("message").toString()));
+                        player.sendMessage(ChatColor.translateAlternateColorCodes(
+                                '&', noEndCrystals.config.get("message").toString()));
                     }
                 }
             }
