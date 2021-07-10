@@ -2,7 +2,7 @@ name: NoEndCrystals
 main: lol.hyper.noendcrystals.NoEndCrystals
 authors: [ hyperdefined ]
 version: ${project.version}
-api-version: 1.15
+api-version: 1.13
 commands:
   noendcrystals:
     usage: /noendcrystals
