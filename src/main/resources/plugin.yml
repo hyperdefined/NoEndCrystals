@@ -1,12 +1,13 @@
 name: NoEndCrystals
-main: lol.hyper.noendcrystals.NoEndCrystals
-authors: [ hyperdefined ]
 version: ${project.version}
+main: lol.hyper.noendcrystals.NoEndCrystals
 api-version: 1.13
+author: hyperdefined
+website: https://www.spigotmc.org/resources/noendcrystals.77559/
+description: Disable/enable placement of End Crystals in certain worlds.
 commands:
   noendcrystals:
     usage: /noendcrystals
-    description: Main command.
 permissions:
   noendcrystals.reload:
     description: Reload configuration.
