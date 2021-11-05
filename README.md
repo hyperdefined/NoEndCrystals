@@ -16,7 +16,7 @@ NoEndCrystals allows you to enable/disable placement of End Crystals in certain 
 * Set a custom message for when a player tries to place a crystal in a disabled world.
 
 ## Documentation
-Visit the [wiki](https://github.com/hyperdefined/NoEndCrystals/wiki) for help.
+Visit the [wiki](https://docs.hyper.lol/noendcrystals) for help.
 
 ## License
 This plugin is released under GNU General Public License v3. See [LICENSE](https://github.com/hyperdefined/NoEndCrystals/blob/master/LICENSE).
