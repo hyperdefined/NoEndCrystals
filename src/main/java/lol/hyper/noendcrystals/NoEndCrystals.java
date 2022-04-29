@@ -20,6 +20,8 @@ package lol.hyper.noendcrystals;
 import lol.hyper.githubreleaseapi.GitHubRelease;
 import lol.hyper.githubreleaseapi.GitHubReleaseAPI;
 import lol.hyper.noendcrystals.tools.EndCrystalChecker;
+import net.kyori.adventure.platform.bukkit.BukkitAudiences;
+import net.kyori.adventure.text.minimessage.MiniMessage;
 import org.bstats.bukkit.Metrics;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -34,14 +36,18 @@ import java.util.logging.Logger;
 public class NoEndCrystals extends JavaPlugin implements Listener {
 
     public FileConfiguration config;
-    public File configFile = new File(this.getDataFolder(), "config.yml");
+    public final File configFile = new File(this.getDataFolder(), "config.yml");
     public final Logger logger = this.getLogger();
 
     public CommandMain commandReload;
     public EndCrystalChecker endCrystalChecker;
 
+    public final MiniMessage miniMessage = MiniMessage.miniMessage();
+    private BukkitAudiences adventure;
+
     @Override
     public void onEnable() {
+        this.adventure = BukkitAudiences.create(this);
         commandReload = new CommandMain(this);
         endCrystalChecker = new EndCrystalChecker(this);
         if (!configFile.exists()) {
@@ -59,6 +65,11 @@ public class NoEndCrystals extends JavaPlugin implements Listener {
 
     public void loadConfig(File file) {
         config = YamlConfiguration.loadConfiguration(file);
+
+        int CONFIG_VERSION = 1;
+        if (config.getInt("config-version") != CONFIG_VERSION) {
+            logger.warning("Your config file is outdated! Please regenerate the config.");
+        }
     }
 
     public void checkForUpdates() {
@@ -82,5 +93,12 @@ public class NoEndCrystals extends JavaPlugin implements Listener {
         } else {
             logger.warning("A new version is available (" + latest.getTagVersion() + ")! You are running version " + current.getTagVersion() + ". You are " + buildsBehind + " version(s) behind.");
         }
+    }
+
+    public BukkitAudiences getAdventure() {
+        if (this.adventure == null) {
+            throw new IllegalStateException("Tried to access Adventure when the plugin was disabled!");
+        }
+        return this.adventure;
     }
 }

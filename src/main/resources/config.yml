@@ -6,4 +6,6 @@ worlds:
   - world1
   - world2
   - world3
-message: '&cEnd Crystals are disabled in this world.'
+message: '<red>End Crystals are disabled in this world.</red>'
+
+config-version: 1

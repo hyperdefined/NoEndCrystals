@@ -18,7 +18,6 @@
 package lol.hyper.noendcrystals.tools;
 
 import lol.hyper.noendcrystals.NoEndCrystals;
-import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
@@ -45,15 +44,18 @@ public class EndCrystalChecker implements Listener {
     public void onPlayerInteract(final PlayerInteractEvent event) {
         Player player = event.getPlayer();
         if (Action.RIGHT_CLICK_BLOCK == event.getAction()) {
+            if (event.getMaterial() != Material.END_CRYSTAL) {
+                return;
+            }
             if (event.getClickedBlock() == null) return;
-            if (event.getClickedBlock().getType().equals(Material.OBSIDIAN)
-                    || event.getClickedBlock().getType().equals(Material.BEDROCK)) {
-                if (Material.END_CRYSTAL == event.getMaterial()) {
-                    if (!allow(player.getWorld())) {
-                        event.setCancelled(true);
-                        player.sendMessage(ChatColor.translateAlternateColorCodes(
-                                '&', noEndCrystals.config.get("message").toString()));
+            if (event.getClickedBlock().getType() == Material.OBSIDIAN || event.getClickedBlock().getType() == Material.BEDROCK) {
+                if (!allow(player.getWorld())) {
+                    event.setCancelled(true);
+                    String message = noEndCrystals.config.getString("message");
+                    if (message == null || message.isEmpty()) {
+                        return;
                     }
+                    noEndCrystals.getAdventure().player(player).sendMessage(noEndCrystals.miniMessage.deserialize(message));
                 }
             }
         }
