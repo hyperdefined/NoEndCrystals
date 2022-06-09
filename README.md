@@ -1,7 +1,7 @@
 <h1 align="center">NoEndCrystals</h1>
 
 <p align="center">
-	<img src="https://img.shields.io/badge/Minecraft-1.9--1.18-orange" alt="Minecraft versions">
+	<img src="https://img.shields.io/badge/Minecraft-1.9--1.19-orange" alt="Minecraft versions">
 	<img src="https://img.shields.io/github/v/release/hyperdefined/NoEndCrystals" alt="GitHub release (latest by date)">
 	<a href="https://github.com/hyperdefined/NoEndCrystals/releases"><img src="https://img.shields.io/github/downloads/hyperdefined/NoEndCrystals/total?logo=github" alt="Downloads"></a>
 	<a href="https://en.cryptobadges.io/donate/1F29aNKQzci3ga5LDcHHawYzFPXvELTFoL"><img src="https://en.cryptobadges.io/badge/micro/1F29aNKQzci3ga5LDcHHawYzFPXvELTFoL" alt="Donate with Bitcoin"></a>
