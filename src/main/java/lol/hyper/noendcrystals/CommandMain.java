@@ -47,7 +47,7 @@ public class CommandMain implements TabExecutor {
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, String[] args) {
         if (args.length == 0 || sender instanceof ConsoleCommandSender) {
-            audiences.sender(sender).sendMessage(miniMessage.deserialize("<green>NoEndCrystals version " + noEndCrystals.getDescription().getVersion() + ". Created by hyperdefined.</green>"));
+            audiences.sender(sender).sendMessage(Component.text("NoEndCrystals version " + noEndCrystals.getDescription().getVersion() + ". Created by hyperdefined.").color(NamedTextColor.GREEN));
             return true;
         }
         switch (args[0]) {
