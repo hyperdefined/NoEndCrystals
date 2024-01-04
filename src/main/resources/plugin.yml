@@ -5,9 +5,11 @@ api-version: 1.13
 author: hyperdefined
 website: https://www.spigotmc.org/resources/noendcrystals.77559/
 description: Disable/enable placement of End Crystals in certain worlds.
+folia-supported: true
 commands:
   noendcrystals:
     usage: /noendcrystals
+    permission: noendcrystals.reload
 permissions:
   noendcrystals.reload:
     description: Reload configuration.

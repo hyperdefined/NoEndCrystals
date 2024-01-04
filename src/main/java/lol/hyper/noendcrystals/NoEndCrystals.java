@@ -28,6 +28,7 @@ import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
+import space.arim.morepaperlib.MorePaperLib;
 
 import java.io.File;
 import java.io.IOException;
@@ -48,6 +49,7 @@ public class NoEndCrystals extends JavaPlugin implements Listener {
     @Override
     public void onEnable() {
         this.adventure = BukkitAudiences.create(this);
+        MorePaperLib morePaperLib = new MorePaperLib(this);
         commandReload = new CommandMain(this);
         endCrystalChecker = new EndCrystalChecker(this);
         if (!configFile.exists()) {
@@ -60,7 +62,7 @@ public class NoEndCrystals extends JavaPlugin implements Listener {
 
         new Metrics(this, 7230);
 
-        Bukkit.getScheduler().runTaskAsynchronously(this, this::checkForUpdates);
+        morePaperLib.scheduling().asyncScheduler().run(this::checkForUpdates);
     }
 
     public void loadConfig(File file) {
@@ -76,9 +78,9 @@ public class NoEndCrystals extends JavaPlugin implements Listener {
         GitHubReleaseAPI api;
         try {
             api = new GitHubReleaseAPI("NoEndCrystals", "hyperdefined");
-        } catch (IOException e) {
+        } catch (IOException exception) {
             logger.warning("Unable to check updates!");
-            e.printStackTrace();
+            exception.printStackTrace();
             return;
         }
         GitHubRelease current = api.getReleaseByTag(this.getDescription().getVersion());

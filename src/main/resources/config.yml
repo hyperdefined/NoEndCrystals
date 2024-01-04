@@ -3,9 +3,9 @@
 # False: End Crystals are not allowed in these worlds.
 whitelist: true
 worlds:
-  - world1
-  - world2
-  - world3
-message: '<red>End Crystals are disabled in this world.</red>'
+  - world
+  - world_nether
+  - world_the_end
+message: '<red>End Crystals are disabled in this world.'
 
 config-version: 1
