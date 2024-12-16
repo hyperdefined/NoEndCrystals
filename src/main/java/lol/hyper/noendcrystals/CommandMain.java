@@ -28,6 +28,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.io.IOException;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 
@@ -191,7 +192,7 @@ public class CommandMain implements TabExecutor {
                 return Arrays.asList("whitelist", "blacklist");
             }
             if (arg.equalsIgnoreCase("add") || arg.equalsIgnoreCase("help") || arg.equalsIgnoreCase("reload") || arg.equalsIgnoreCase("worlds")) {
-                return null;
+                return Collections.emptyList();
             }
         }
         return Arrays.asList("reload", "worlds", "add", "remove", "help", "mode");
