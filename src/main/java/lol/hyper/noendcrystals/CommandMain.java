@@ -17,7 +17,6 @@
 
 package lol.hyper.noendcrystals;
 
-import net.kyori.adventure.platform.bukkit.BukkitAudiences;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import net.kyori.adventure.text.minimessage.MiniMessage;
@@ -35,55 +34,51 @@ import java.util.Locale;
 public class CommandMain implements TabExecutor {
 
     private final NoEndCrystals noEndCrystals;
-    private final BukkitAudiences audiences;
-    private final MiniMessage miniMessage;
 
     public CommandMain(NoEndCrystals noEndCrystals) {
         this.noEndCrystals = noEndCrystals;
-        this.audiences = noEndCrystals.getAdventure();
-        this.miniMessage = noEndCrystals.miniMessage;
     }
 
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, String[] args) {
         if (args.length == 0 || sender instanceof ConsoleCommandSender) {
-            audiences.sender(sender).sendMessage(Component.text("NoEndCrystals version " + noEndCrystals.getDescription().getVersion() + ". Created by hyperdefined.", NamedTextColor.GREEN));
+            sender.sendMessage(Component.text("NoEndCrystals version " + noEndCrystals.getDescription().getVersion() + ". Created by hyperdefined.", NamedTextColor.GREEN));
             return true;
         }
         switch (args[0]) {
             case "reload": {
                 noEndCrystals.loadConfig(noEndCrystals.configFile);
-                audiences.sender(sender).sendMessage(Component.text("Configuration reloaded!", NamedTextColor.GREEN));
+                sender.sendMessage(Component.text("Configuration reloaded!", NamedTextColor.GREEN));
                 break;
             }
             case "worlds": {
                 List<String> worlds = noEndCrystals.config.getStringList("worlds");
                 if (worlds.isEmpty()) {
-                    audiences.sender(sender).sendMessage(Component.text("The worlds list is currently empty.", NamedTextColor.RED));
+                    sender.sendMessage(Component.text("The worlds list is currently empty.", NamedTextColor.RED));
                     break;
                 }
                 boolean mode = noEndCrystals.config.getBoolean("whitelist");
-                audiences.sender(sender).sendMessage(Component.text("-----------------NoEndCrystals-----------------", NamedTextColor.GOLD));
+                sender.sendMessage(Component.text("-----------------NoEndCrystals-----------------", NamedTextColor.GOLD));
                 // whitelist is on if mode = true
                 if (mode) {
-                    audiences.sender(sender).sendMessage(Component.text("End Crystals will only work in these specified world(s):", NamedTextColor.YELLOW));
+                    sender.sendMessage(Component.text("End Crystals will only work in these specified world(s):", NamedTextColor.YELLOW));
                 } else {
-                    audiences.sender(sender).sendMessage(Component.text("End Crystals cannot be placed in these world(s):", NamedTextColor.YELLOW));
+                    sender.sendMessage(Component.text("End Crystals cannot be placed in these world(s):", NamedTextColor.YELLOW));
                 }
-                audiences.sender(sender).sendMessage(Component.text(String.join(", ", worlds), NamedTextColor.YELLOW));
-                audiences.sender(sender).sendMessage(Component.text("--------------------------------------------", NamedTextColor.GOLD));
+                sender.sendMessage(Component.text(String.join(", ", worlds), NamedTextColor.YELLOW));
+                sender.sendMessage(Component.text("--------------------------------------------", NamedTextColor.GOLD));
                 break;
             }
             case "help": {
                 // I don't feel like doing these properly
-                audiences.sender(sender).sendMessage(Component.text("-----------------NoEndCrystals-----------------", NamedTextColor.GOLD));
-                audiences.sender(sender).sendMessage(miniMessage.deserialize("<gold>/noendcrystals help</gold> <yellow>- Shows this menu.</yellow>"));
-                audiences.sender(sender).sendMessage(miniMessage.deserialize("<gold>/noendcrystals worlds</gold> <yellow>- Shows which worlds are enabled/disabled.</yellow>"));
-                audiences.sender(sender).sendMessage(miniMessage.deserialize("<gold>/noendcrystals add</gold> <yellow>- Adds a world to the list.</yellow>"));
-                audiences.sender(sender).sendMessage(miniMessage.deserialize("<gold>/noendcrystals remove</gold> <yellow>- Removes a world from the list.</yellow>"));
-                audiences.sender(sender).sendMessage(miniMessage.deserialize("<gold>/noendcrystals mode</gold> <yellow>- Change which mode to use.</yellow>"));
-                audiences.sender(sender).sendMessage(miniMessage.deserialize("<gold>/noendcrystals reload</gold> <yellow>- Reloads the configuration.</yellow>"));
-                audiences.sender(sender).sendMessage(Component.text("--------------------------------------------", NamedTextColor.GOLD));
+                sender.sendMessage(Component.text("-----------------NoEndCrystals-----------------", NamedTextColor.GOLD));
+                sender.sendMessage(MiniMessage.miniMessage().deserialize("<gold>/noendcrystals help</gold> <yellow>- Shows this menu.</yellow>"));
+                sender.sendMessage(MiniMessage.miniMessage().deserialize("<gold>/noendcrystals worlds</gold> <yellow>- Shows which worlds are enabled/disabled.</yellow>"));
+                sender.sendMessage(MiniMessage.miniMessage().deserialize("<gold>/noendcrystals add</gold> <yellow>- Adds a world to the list.</yellow>"));
+                sender.sendMessage(MiniMessage.miniMessage().deserialize("<gold>/noendcrystals remove</gold> <yellow>- Removes a world from the list.</yellow>"));
+                sender.sendMessage(MiniMessage.miniMessage().deserialize("<gold>/noendcrystals mode</gold> <yellow>- Change which mode to use.</yellow>"));
+                sender.sendMessage(MiniMessage.miniMessage().deserialize("<gold>/noendcrystals reload</gold> <yellow>- Reloads the configuration.</yellow>"));
+                sender.sendMessage(Component.text("--------------------------------------------", NamedTextColor.GOLD));
                 break;
             }
             case "add": {
@@ -91,7 +86,7 @@ public class CommandMain implements TabExecutor {
                     String world = args[1].toLowerCase(Locale.ROOT);
                     List<String> worlds = noEndCrystals.config.getStringList("worlds");
                     if (worlds.contains(world.toLowerCase(Locale.ROOT))) {
-                        audiences.sender(sender).sendMessage(Component.text("This world is already on the list.", NamedTextColor.RED));
+                        sender.sendMessage(Component.text("This world is already on the list.", NamedTextColor.RED));
                         break;
                     }
                     worlds.add(world);
@@ -102,9 +97,9 @@ public class CommandMain implements TabExecutor {
                         noEndCrystals.logger.severe("Unable to save config!");
                         e.printStackTrace();
                     }
-                    audiences.sender(sender).sendMessage(Component.text(world + " has been added.", NamedTextColor.GREEN));
+                    sender.sendMessage(Component.text(world + " has been added.", NamedTextColor.GREEN));
                 } else {
-                    audiences.sender(sender).sendMessage(Component.text("You must specify which world.", NamedTextColor.RED));
+                    sender.sendMessage(Component.text("You must specify which world.", NamedTextColor.RED));
                 }
                 break;
             }
@@ -113,7 +108,7 @@ public class CommandMain implements TabExecutor {
                     String world = args[1].toLowerCase(Locale.ROOT);
                     List<String> worlds = noEndCrystals.config.getStringList("worlds");
                     if (!worlds.contains(world.toLowerCase(Locale.ROOT))) {
-                        audiences.sender(sender).sendMessage(Component.text("This world is not on the list.", NamedTextColor.RED));
+                        sender.sendMessage(Component.text("This world is not on the list.", NamedTextColor.RED));
                         break;
                     }
                     worlds.remove(world);
@@ -124,9 +119,9 @@ public class CommandMain implements TabExecutor {
                         noEndCrystals.logger.severe("Unable to save config!");
                         e.printStackTrace();
                     }
-                    audiences.sender(sender).sendMessage(Component.text(world + " has been removed.", NamedTextColor.GREEN));
+                    sender.sendMessage(Component.text(world + " has been removed.", NamedTextColor.GREEN));
                 } else {
-                    audiences.sender(sender).sendMessage(Component.text("You must specify which world.", NamedTextColor.RED));
+                    sender.sendMessage(Component.text("You must specify which world.", NamedTextColor.RED));
                 }
                 break;
             }
@@ -141,7 +136,7 @@ public class CommandMain implements TabExecutor {
                                 noEndCrystals.logger.severe("Unable to save config!");
                                 e.printStackTrace();
                             }
-                            audiences.sender(sender).sendMessage(Component.text("Mode has been changed to whitelist.", NamedTextColor.GREEN));
+                            sender.sendMessage(Component.text("Mode has been changed to whitelist.", NamedTextColor.GREEN));
                             break;
                         }
                         case "blacklist": {
@@ -152,11 +147,11 @@ public class CommandMain implements TabExecutor {
                                 noEndCrystals.logger.severe("Unable to save config!");
                                 e.printStackTrace();
                             }
-                            audiences.sender(sender).sendMessage(Component.text("Mode has been changed to blacklist.", NamedTextColor.GREEN));
+                            sender.sendMessage(Component.text("Mode has been changed to blacklist.", NamedTextColor.GREEN));
                             break;
                         }
                         default: {
-                            audiences.sender(sender).sendMessage(Component.text("Invalid mode.", NamedTextColor.RED));
+                            sender.sendMessage(Component.text("Invalid mode.", NamedTextColor.RED));
                         }
                     }
                     break;
@@ -167,19 +162,19 @@ public class CommandMain implements TabExecutor {
                 } else {
                     mode = "blacklist";
                 }
-                audiences.sender(sender).sendMessage(Component.text("-----------------NoEndCrystals-----------------", NamedTextColor.GOLD));
-                audiences.sender(sender).sendMessage(Component.text("Mode is currently set to " + mode + ".", NamedTextColor.YELLOW));
+                sender.sendMessage(Component.text("-----------------NoEndCrystals-----------------", NamedTextColor.GOLD));
+                sender.sendMessage(Component.text("Mode is currently set to " + mode + ".", NamedTextColor.YELLOW));
                 if (mode.equals("whitelist")) {
-                    audiences.sender(sender).sendMessage(Component.text("End Crystals will only work in the specified worlds (see /noendcrystals /worlds).", NamedTextColor.YELLOW));
+                    sender.sendMessage(Component.text("End Crystals will only work in the specified worlds (see /noendcrystals /worlds).", NamedTextColor.YELLOW));
                 } else {
-                    audiences.sender(sender).sendMessage(Component.text("End Crystals will work in all worlds besides the one(s) on the list (see /noendcrystals /worlds).", NamedTextColor.YELLOW));
+                    sender.sendMessage(Component.text("End Crystals will work in all worlds besides the one(s) on the list (see /noendcrystals /worlds).", NamedTextColor.YELLOW));
                 }
-                audiences.sender(sender).sendMessage(Component.text("If you want to change the mode, simply do /noendcrystals mode <whitelist/blacklist>", NamedTextColor.YELLOW));
-                audiences.sender(sender).sendMessage(Component.text("--------------------------------------------", NamedTextColor.GOLD));
+                sender.sendMessage(Component.text("If you want to change the mode, simply do /noendcrystals mode <whitelist/blacklist>", NamedTextColor.YELLOW));
+                sender.sendMessage(Component.text("--------------------------------------------", NamedTextColor.GOLD));
                 break;
             }
             default: {
-                audiences.sender(sender).sendMessage(Component.text("Unknown option. Please see /noendcrystals help for all valid options.", NamedTextColor.RED));
+                sender.sendMessage(Component.text("Unknown option. Please see /noendcrystals help for all valid options.", NamedTextColor.RED));
             }
         }
         return true;

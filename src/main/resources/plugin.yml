@@ -1,9 +1,9 @@
 name: NoEndCrystals
 version: ${project.version}
 main: lol.hyper.noendcrystals.NoEndCrystals
-api-version: 1.13
+api-version: 1.21
 author: hyperdefined
-website: https://www.spigotmc.org/resources/noendcrystals.77559/
+website: https://github.com/hyperdefined/NoEndCrystals
 description: Disable/enable placement of End Crystals in certain worlds.
 folia-supported: true
 commands:

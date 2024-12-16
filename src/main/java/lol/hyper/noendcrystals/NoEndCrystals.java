@@ -20,15 +20,12 @@ package lol.hyper.noendcrystals;
 import lol.hyper.githubreleaseapi.GitHubRelease;
 import lol.hyper.githubreleaseapi.GitHubReleaseAPI;
 import lol.hyper.noendcrystals.tools.EndCrystalChecker;
-import net.kyori.adventure.platform.bukkit.BukkitAudiences;
-import net.kyori.adventure.text.minimessage.MiniMessage;
 import org.bstats.bukkit.Metrics;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
-import space.arim.morepaperlib.MorePaperLib;
 
 import java.io.File;
 import java.io.IOException;
@@ -43,13 +40,8 @@ public class NoEndCrystals extends JavaPlugin implements Listener {
     public CommandMain commandReload;
     public EndCrystalChecker endCrystalChecker;
 
-    public final MiniMessage miniMessage = MiniMessage.miniMessage();
-    private BukkitAudiences adventure;
-
     @Override
     public void onEnable() {
-        this.adventure = BukkitAudiences.create(this);
-        MorePaperLib morePaperLib = new MorePaperLib(this);
         commandReload = new CommandMain(this);
         endCrystalChecker = new EndCrystalChecker(this);
         if (!configFile.exists()) {
@@ -62,7 +54,7 @@ public class NoEndCrystals extends JavaPlugin implements Listener {
 
         new Metrics(this, 7230);
 
-        morePaperLib.scheduling().asyncScheduler().run(this::checkForUpdates);
+        Bukkit.getAsyncScheduler().runNow(this, scheduledTask -> checkForUpdates());
     }
 
     public void loadConfig(File file) {
@@ -83,7 +75,7 @@ public class NoEndCrystals extends JavaPlugin implements Listener {
             exception.printStackTrace();
             return;
         }
-        GitHubRelease current = api.getReleaseByTag(this.getDescription().getVersion());
+        GitHubRelease current = api.getReleaseByTag(this.getPluginMeta().getVersion());
         GitHubRelease latest = api.getLatestVersion();
         if (current == null) {
             logger.warning("You are running a version that does not exist on GitHub. If you are in a dev environment, you can ignore this. Otherwise, this is a bug!");
@@ -95,12 +87,5 @@ public class NoEndCrystals extends JavaPlugin implements Listener {
         } else {
             logger.warning("A new version is available (" + latest.getTagVersion() + ")! You are running version " + current.getTagVersion() + ". You are " + buildsBehind + " version(s) behind.");
         }
-    }
-
-    public BukkitAudiences getAdventure() {
-        if (this.adventure == null) {
-            throw new IllegalStateException("Tried to access Adventure when the plugin was disabled!");
-        }
-        return this.adventure;
     }
 }

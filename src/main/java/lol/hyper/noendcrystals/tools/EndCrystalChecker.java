@@ -18,6 +18,7 @@
 package lol.hyper.noendcrystals.tools;
 
 import lol.hyper.noendcrystals.NoEndCrystals;
+import net.kyori.adventure.text.minimessage.MiniMessage;
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
@@ -55,7 +56,7 @@ public class EndCrystalChecker implements Listener {
                     if (message == null || message.isEmpty()) {
                         return;
                     }
-                    noEndCrystals.getAdventure().player(player).sendMessage(noEndCrystals.miniMessage.deserialize(message));
+                    player.sendMessage(MiniMessage.miniMessage().deserialize(message));
                 }
             }
         }
