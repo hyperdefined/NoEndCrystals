@@ -19,7 +19,6 @@ package lol.hyper.noendcrystals;
 
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
-import net.kyori.adventure.text.minimessage.MiniMessage;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
@@ -43,7 +42,7 @@ public class CommandMain implements TabExecutor {
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, String[] args) {
         if (args.length == 0 || sender instanceof ConsoleCommandSender) {
-            sender.sendMessage(Component.text("NoEndCrystals version " + noEndCrystals.getDescription().getVersion() + ". Created by hyperdefined.", NamedTextColor.GREEN));
+            sender.sendMessage(Component.text("NoEndCrystals version " + noEndCrystals.getPluginMeta().getVersion() + ". Created by hyperdefined.", NamedTextColor.GREEN));
             return true;
         }
         switch (args[0]) {
@@ -73,12 +72,12 @@ public class CommandMain implements TabExecutor {
             case "help": {
                 // I don't feel like doing these properly
                 sender.sendMessage(Component.text("-----------------NoEndCrystals-----------------", NamedTextColor.GOLD));
-                sender.sendMessage(MiniMessage.miniMessage().deserialize("<gold>/noendcrystals help</gold> <yellow>- Shows this menu.</yellow>"));
-                sender.sendMessage(MiniMessage.miniMessage().deserialize("<gold>/noendcrystals worlds</gold> <yellow>- Shows which worlds are enabled/disabled.</yellow>"));
-                sender.sendMessage(MiniMessage.miniMessage().deserialize("<gold>/noendcrystals add</gold> <yellow>- Adds a world to the list.</yellow>"));
-                sender.sendMessage(MiniMessage.miniMessage().deserialize("<gold>/noendcrystals remove</gold> <yellow>- Removes a world from the list.</yellow>"));
-                sender.sendMessage(MiniMessage.miniMessage().deserialize("<gold>/noendcrystals mode</gold> <yellow>- Change which mode to use.</yellow>"));
-                sender.sendMessage(MiniMessage.miniMessage().deserialize("<gold>/noendcrystals reload</gold> <yellow>- Reloads the configuration.</yellow>"));
+                sender.sendMessage(noEndCrystals.textUtils.format("<gold>/noendcrystals help</gold> <yellow>- Shows this menu.</yellow>"));
+                sender.sendMessage(noEndCrystals.textUtils.format("<gold>/noendcrystals worlds</gold> <yellow>- Shows which worlds are enabled/disabled.</yellow>"));
+                sender.sendMessage(noEndCrystals.textUtils.format("<gold>/noendcrystals add</gold> <yellow>- Adds a world to the list.</yellow>"));
+                sender.sendMessage(noEndCrystals.textUtils.format("<gold>/noendcrystals remove</gold> <yellow>- Removes a world from the list.</yellow>"));
+                sender.sendMessage(noEndCrystals.textUtils.format("<gold>/noendcrystals mode</gold> <yellow>- Change which mode to use.</yellow>"));
+                sender.sendMessage(noEndCrystals.textUtils.format("<gold>/noendcrystals reload</gold> <yellow>- Reloads the configuration.</yellow>"));
                 sender.sendMessage(Component.text("--------------------------------------------", NamedTextColor.GOLD));
                 break;
             }
@@ -94,9 +93,8 @@ public class CommandMain implements TabExecutor {
                     noEndCrystals.config.set("worlds", worlds);
                     try {
                         noEndCrystals.config.save(noEndCrystals.configFile);
-                    } catch (IOException e) {
-                        noEndCrystals.logger.severe("Unable to save config!");
-                        e.printStackTrace();
+                    } catch (IOException exception) {
+                        noEndCrystals.logger.error("Unable to save config!", exception);
                     }
                     sender.sendMessage(Component.text(world + " has been added.", NamedTextColor.GREEN));
                 } else {
@@ -116,9 +114,8 @@ public class CommandMain implements TabExecutor {
                     noEndCrystals.config.set("worlds", worlds);
                     try {
                         noEndCrystals.config.save(noEndCrystals.configFile);
-                    } catch (IOException e) {
-                        noEndCrystals.logger.severe("Unable to save config!");
-                        e.printStackTrace();
+                    } catch (IOException exception) {
+                        noEndCrystals.logger.error("Unable to save config!", exception);
                     }
                     sender.sendMessage(Component.text(world + " has been removed.", NamedTextColor.GREEN));
                 } else {
@@ -133,9 +130,8 @@ public class CommandMain implements TabExecutor {
                             noEndCrystals.config.set("whitelist", true);
                             try {
                                 noEndCrystals.config.save(noEndCrystals.configFile);
-                            } catch (IOException e) {
-                                noEndCrystals.logger.severe("Unable to save config!");
-                                e.printStackTrace();
+                            } catch (IOException exception) {
+                                noEndCrystals.logger.error("Unable to save config!", exception);
                             }
                             sender.sendMessage(Component.text("Mode has been changed to whitelist.", NamedTextColor.GREEN));
                             break;
@@ -144,9 +140,8 @@ public class CommandMain implements TabExecutor {
                             noEndCrystals.config.set("whitelist", false);
                             try {
                                 noEndCrystals.config.save(noEndCrystals.configFile);
-                            } catch (IOException e) {
-                                noEndCrystals.logger.severe("Unable to save config!");
-                                e.printStackTrace();
+                            } catch (IOException exception) {
+                                noEndCrystals.logger.error("Unable to save config!", exception);
                             }
                             sender.sendMessage(Component.text("Mode has been changed to blacklist.", NamedTextColor.GREEN));
                             break;

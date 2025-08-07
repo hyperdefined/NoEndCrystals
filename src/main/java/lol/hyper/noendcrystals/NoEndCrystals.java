@@ -17,10 +17,12 @@
 
 package lol.hyper.noendcrystals;
 
-import lol.hyper.githubreleaseapi.GitHubRelease;
-import lol.hyper.githubreleaseapi.GitHubReleaseAPI;
+import lol.hyper.hyperlib.HyperLib;
+import lol.hyper.hyperlib.bstats.HyperStats;
+import lol.hyper.hyperlib.releases.HyperUpdater;
+import lol.hyper.hyperlib.utils.TextUtils;
 import lol.hyper.noendcrystals.tools.EndCrystalChecker;
-import org.bstats.bukkit.Metrics;
+import net.kyori.adventure.text.logger.slf4j.ComponentLogger;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -28,20 +30,28 @@ import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
-import java.io.IOException;
-import java.util.logging.Logger;
 
 public class NoEndCrystals extends JavaPlugin implements Listener {
 
     public FileConfiguration config;
     public final File configFile = new File(this.getDataFolder(), "config.yml");
-    public final Logger logger = this.getLogger();
+    public final ComponentLogger logger = this.getComponentLogger();
 
     public CommandMain commandReload;
     public EndCrystalChecker endCrystalChecker;
 
+    public TextUtils textUtils;
+
     @Override
     public void onEnable() {
+        HyperLib hyperLib = new HyperLib(this);
+        hyperLib.setup();
+
+        HyperStats stats = new HyperStats(hyperLib, 7230);
+        stats.setup();
+
+        textUtils = new TextUtils(hyperLib);
+
         commandReload = new CommandMain(this);
         endCrystalChecker = new EndCrystalChecker(this);
         if (!configFile.exists()) {
@@ -52,9 +62,11 @@ public class NoEndCrystals extends JavaPlugin implements Listener {
         Bukkit.getServer().getPluginManager().registerEvents(endCrystalChecker, this);
         this.getCommand("noendcrystals").setExecutor(commandReload);
 
-        new Metrics(this, 7230);
-
-        Bukkit.getAsyncScheduler().runNow(this, scheduledTask -> checkForUpdates());
+        HyperUpdater updater = new HyperUpdater(hyperLib);
+        updater.setGitHub("hyperdefined", "NoEndCrystals");
+        updater.setModrinth("Ejmd1WPZ");
+        updater.setHangar("NoEndCrystals", "paper");
+        updater.check();
     }
 
     public void loadConfig(File file) {
@@ -62,30 +74,7 @@ public class NoEndCrystals extends JavaPlugin implements Listener {
 
         int CONFIG_VERSION = 1;
         if (config.getInt("config-version") != CONFIG_VERSION) {
-            logger.warning("Your config file is outdated! Please regenerate the config.");
-        }
-    }
-
-    public void checkForUpdates() {
-        GitHubReleaseAPI api;
-        try {
-            api = new GitHubReleaseAPI("NoEndCrystals", "hyperdefined");
-        } catch (IOException exception) {
-            logger.warning("Unable to check updates!");
-            exception.printStackTrace();
-            return;
-        }
-        GitHubRelease current = api.getReleaseByTag(this.getPluginMeta().getVersion());
-        GitHubRelease latest = api.getLatestVersion();
-        if (current == null) {
-            logger.warning("You are running a version that does not exist on GitHub. If you are in a dev environment, you can ignore this. Otherwise, this is a bug!");
-            return;
-        }
-        int buildsBehind = api.getBuildsBehind(current);
-        if (buildsBehind == 0) {
-            logger.info("You are running the latest version.");
-        } else {
-            logger.warning("A new version is available (" + latest.getTagVersion() + ")! You are running version " + current.getTagVersion() + ". You are " + buildsBehind + " version(s) behind.");
+            logger.warn("Your config file is outdated! Please regenerate the config.");
         }
     }
 }
