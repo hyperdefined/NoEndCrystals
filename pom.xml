@@ -68,12 +68,8 @@
                         <configuration>
                             <relocations>
                                 <relocation>
-                                    <pattern>org.bstats</pattern>
-                                    <shadedPattern>lol.hyper.noendcrystals.bstats</shadedPattern>
-                                </relocation>
-                                <relocation>
-                                    <pattern>lol.hyper.githubreleaseapi</pattern>
-                                    <shadedPattern>lol.hyper.noendcrystals.updater</shadedPattern>
+                                    <pattern>lol.hyper.hyperlib</pattern>
+                                    <shadedPattern>lol.hyper.noendcrystals.hyperlib</shadedPattern>
                                 </relocation>
                             </relocations>
                             <createDependencyReducedPom>false</createDependencyReducedPom>
