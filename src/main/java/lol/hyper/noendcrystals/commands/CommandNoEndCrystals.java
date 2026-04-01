@@ -15,43 +15,69 @@
  * along with NoEndCrystals.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package lol.hyper.noendcrystals;
+/*
+ * This file is part of NoEndCrystals.
+ *
+ * NoEndCrystals is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * NoEndCrystals is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with NoEndCrystals.  If not, see <https://www.gnu.org/licenses/>.
+ */
 
+package lol.hyper.noendcrystals.commands;
+
+import io.papermc.paper.command.brigadier.BasicCommand;
+import io.papermc.paper.command.brigadier.CommandSourceStack;
+import lol.hyper.noendcrystals.NoEndCrystals;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
-import org.bukkit.command.Command;
+import org.bukkit.Bukkit;
+import org.bukkit.World;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
-import org.bukkit.command.TabExecutor;
-import org.jetbrains.annotations.NotNull;
+import org.jspecify.annotations.NonNull;
 
 import java.io.IOException;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-import java.util.Locale;
+import java.util.*;
 
-public class CommandMain implements TabExecutor {
+public class CommandNoEndCrystals implements BasicCommand {
 
     private final NoEndCrystals noEndCrystals;
 
-    public CommandMain(NoEndCrystals noEndCrystals) {
+    public CommandNoEndCrystals(NoEndCrystals noEndCrystals) {
         this.noEndCrystals = noEndCrystals;
     }
 
     @Override
-    public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, String[] args) {
+    public void execute(@NonNull CommandSourceStack source, String @NonNull [] args) {
+        CommandSender sender = source.getSender();
         if (args.length == 0 || sender instanceof ConsoleCommandSender) {
             sender.sendMessage(Component.text("NoEndCrystals version " + noEndCrystals.getPluginMeta().getVersion() + ". Created by hyperdefined.", NamedTextColor.GREEN));
-            return true;
+            return;
         }
         switch (args[0]) {
             case "reload": {
+                if (!sender.hasPermission("noendcrystals.reload")) {
+                    sender.sendMessage(Component.text("You do not have permission for this command.", NamedTextColor.RED));
+                    return;
+                }
                 noEndCrystals.loadConfig(noEndCrystals.configFile);
                 sender.sendMessage(Component.text("Configuration reloaded!", NamedTextColor.GREEN));
                 break;
             }
             case "worlds": {
+                if (!sender.hasPermission("noendcrystals.worlds")) {
+                    sender.sendMessage(Component.text("You do not have permission for this command.", NamedTextColor.RED));
+                    return;
+                }
                 List<String> worlds = noEndCrystals.config.getStringList("worlds");
                 if (worlds.isEmpty()) {
                     sender.sendMessage(Component.text("The worlds list is currently empty.", NamedTextColor.RED));
@@ -82,6 +108,10 @@ public class CommandMain implements TabExecutor {
                 break;
             }
             case "add": {
+                if (!sender.hasPermission("noendcrystals.add")) {
+                    sender.sendMessage(Component.text("You do not have permission for this command.", NamedTextColor.RED));
+                    return;
+                }
                 if (args.length == 2) {
                     String world = args[1].toLowerCase(Locale.ROOT);
                     List<String> worlds = noEndCrystals.config.getStringList("worlds");
@@ -103,6 +133,10 @@ public class CommandMain implements TabExecutor {
                 break;
             }
             case "remove": {
+                if (!sender.hasPermission("noendcrystals.remove")) {
+                    sender.sendMessage(Component.text("You do not have permission for this command.", NamedTextColor.RED));
+                    return;
+                }
                 if (args.length == 2) {
                     String world = args[1].toLowerCase(Locale.ROOT);
                     List<String> worlds = noEndCrystals.config.getStringList("worlds");
@@ -124,6 +158,10 @@ public class CommandMain implements TabExecutor {
                 break;
             }
             case "mode": {
+                if (!sender.hasPermission("noendcrystals.mode")) {
+                    sender.sendMessage(Component.text("You do not have permission for this command.", NamedTextColor.RED));
+                    return;
+                }
                 if (args.length == 2) {
                     switch (args[1]) {
                         case "whitelist": {
@@ -173,23 +211,52 @@ public class CommandMain implements TabExecutor {
                 sender.sendMessage(Component.text("Unknown option. Please see /noendcrystals help for all valid options.", NamedTextColor.RED));
             }
         }
-        return true;
     }
 
     @Override
-    public List<String> onTabComplete(@NotNull CommandSender sender, @NotNull Command command, @NotNull String alias, String[] args) {
-        if (args.length >= 1) {
-            String arg = args[0];
-            if (arg.equalsIgnoreCase("remove")) {
-                return noEndCrystals.config.getStringList("worlds");
+    public String permission() {
+        return "noendcrystals.command";
+    }
+
+    @Override
+    public @NonNull Collection<String> suggest(@NonNull CommandSourceStack source, String[] args) {
+        CommandSender sender = source.getSender();
+        // suggest basic sub commands
+        if (args.length == 0) {
+            List<String> suggestions = new ArrayList<>();
+            if (sender.hasPermission("noendcrystals.reload")) {
+                suggestions.add("reload");
             }
-            if (arg.equalsIgnoreCase("mode")) {
-                return Arrays.asList("whitelist", "blacklist");
+            if (sender.hasPermission("noendcrystals.worlds")) {
+                suggestions.add("worlds");
             }
-            if (arg.equalsIgnoreCase("add") || arg.equalsIgnoreCase("help") || arg.equalsIgnoreCase("reload") || arg.equalsIgnoreCase("worlds")) {
-                return Collections.emptyList();
+            if (sender.hasPermission("noendcrystals.add")) {
+                suggestions.add("add");
             }
+            if (sender.hasPermission("noendcrystals.remove")) {
+                suggestions.add("remove");
+            }
+            if (sender.hasPermission("noendcrystals.mode")) {
+                suggestions.add("mode");
+            }
+            suggestions.add("help");
+            return suggestions;
         }
-        return Arrays.asList("reload", "worlds", "add", "remove", "help", "mode");
+
+        // suggest whitelist/blacklist for mode
+        if (args.length == 2 && args[0].equalsIgnoreCase("mode") && sender.hasPermission("noendcrystals.mode")) {
+            return Arrays.asList("whitelist", "blacklist");
+        }
+
+        // suggest whitelist/blacklist for mode
+        if (args.length == 2 && args[0].equalsIgnoreCase("add") && sender.hasPermission("noendcrystals.add")) {
+            return Bukkit.getWorlds().stream().map(World::getName).toList();
+        }
+
+        // suggest whitelist/blacklist for mode
+        if (args.length == 2 && args[0].equalsIgnoreCase("remove") && sender.hasPermission("noendcrystals.remove")) {
+            return noEndCrystals.config.getStringList("worlds");
+        }
+        return Collections.emptyList();
     }
 }

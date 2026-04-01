@@ -1,0 +1,34 @@
+name: NoEndCrystals
+version: ${project.version}
+main: lol.hyper.noendcrystals.NoEndCrystals
+api-version: 1.21
+author: hyperdefined
+website: https://github.com/hyperdefined/NoEndCrystals
+description: Disable/enable placement of End Crystals in certain worlds.
+folia-supported: true
+
+loader: lol.hyper.noendcrystals.NoEndCrystalsLoader
+
+commands:
+  noendcrystals:
+    usage: /noendcrystals
+    permission: noendcrystals.command
+permissions:
+  noendcrystals.command:
+    description: Allows the usage of /noendcrystals.
+    default: true
+  noendcrystals.reload:
+    description: Allows the usage of /noendcrystals reload.
+    default: op
+  noendcrystals.worlds:
+    description: Allows the usage of /noendcrystals worlds.
+    default: true
+  noendcrystals.add:
+    description: Allows the usage of /noendcrystals add.
+    default: op
+  noendcrystals.remove:
+    description: Allows the usage of /noendcrystals remove.
+    default: op
+  noendcrystals.mode:
+    description: Allows the usage of /noendcrystals remove.
+    default: op

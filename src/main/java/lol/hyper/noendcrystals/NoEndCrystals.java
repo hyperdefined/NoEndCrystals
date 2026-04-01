@@ -21,6 +21,7 @@ import lol.hyper.hyperlib.HyperLib;
 import lol.hyper.hyperlib.bstats.HyperStats;
 import lol.hyper.hyperlib.releases.HyperUpdater;
 import lol.hyper.hyperlib.utils.TextUtils;
+import lol.hyper.noendcrystals.commands.CommandNoEndCrystals;
 import lol.hyper.noendcrystals.tools.EndCrystalChecker;
 import net.kyori.adventure.text.logger.slf4j.ComponentLogger;
 import org.bukkit.Bukkit;
@@ -37,7 +38,7 @@ public class NoEndCrystals extends JavaPlugin implements Listener {
     public final File configFile = new File(this.getDataFolder(), "config.yml");
     public final ComponentLogger logger = this.getComponentLogger();
 
-    public CommandMain commandReload;
+    public CommandNoEndCrystals commandNoEndCrystals;
     public EndCrystalChecker endCrystalChecker;
 
     public TextUtils textUtils;
@@ -52,7 +53,7 @@ public class NoEndCrystals extends JavaPlugin implements Listener {
 
         textUtils = new TextUtils(hyperLib);
 
-        commandReload = new CommandMain(this);
+        commandNoEndCrystals = new CommandNoEndCrystals(this);
         endCrystalChecker = new EndCrystalChecker(this);
         if (!configFile.exists()) {
             this.saveResource("config.yml", true);
@@ -60,7 +61,7 @@ public class NoEndCrystals extends JavaPlugin implements Listener {
         loadConfig(configFile);
 
         Bukkit.getServer().getPluginManager().registerEvents(endCrystalChecker, this);
-        this.getCommand("noendcrystals").setExecutor(commandReload);
+        registerCommand("noendcrystals", commandNoEndCrystals);
 
         HyperUpdater updater = new HyperUpdater(hyperLib);
         updater.setGitHub("hyperdefined", "NoEndCrystals");
