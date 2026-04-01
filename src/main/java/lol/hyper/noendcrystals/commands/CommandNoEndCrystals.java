@@ -248,12 +248,12 @@ public class CommandNoEndCrystals implements BasicCommand {
             return Arrays.asList("whitelist", "blacklist");
         }
 
-        // suggest whitelist/blacklist for mode
+        // suggest worlds to add
         if (args.length == 2 && args[0].equalsIgnoreCase("add") && sender.hasPermission("noendcrystals.add")) {
             return Bukkit.getWorlds().stream().map(World::getName).toList();
         }
 
-        // suggest whitelist/blacklist for mode
+        // suggest worlds to remove
         if (args.length == 2 && args[0].equalsIgnoreCase("remove") && sender.hasPermission("noendcrystals.remove")) {
             return noEndCrystals.config.getStringList("worlds");
         }
