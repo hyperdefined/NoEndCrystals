@@ -1,7 +1,7 @@
 name: NoEndCrystals
-version: ${project.version}
+version: ${version}
 main: lol.hyper.noendcrystals.NoEndCrystals
-api-version: 1.21
+api-version: '26.1.1'
 author: hyperdefined
 website: https://github.com/hyperdefined/NoEndCrystals
 description: Disable/enable placement of End Crystals in certain worlds.
