@@ -18,7 +18,7 @@ dependencies {
 }
 
 group = "lol.hyper"
-version = "1.4.2"
+version = "1.4.3"
 description = "NoEndCrystals"
 java.sourceCompatibility = JavaVersion.VERSION_25
 
