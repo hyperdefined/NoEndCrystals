@@ -30,5 +30,5 @@ permissions:
     description: Allows the usage of /noendcrystals remove.
     default: op
   noendcrystals.mode:
-    description: Allows the usage of /noendcrystals remove.
+    description: Allows the usage of /noendcrystals mode.
     default: op
