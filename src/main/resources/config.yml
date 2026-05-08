@@ -8,4 +8,7 @@ worlds:
   - world_the_end
 message: '<red>End Crystals are disabled in this world.'
 
+# Check for plugin updates on startup.
+check-updates: true
+
 config-version: 1
