@@ -13,14 +13,14 @@ repositories {
 }
 
 dependencies {
-    compileOnly("io.papermc.paper:paper-api:26.1.1.build.+")
+    compileOnly("io.papermc.paper:paper-api:1.21.3-R0.1-SNAPSHOT")
     compileOnly("com.github.hyperdefined:hyperlib:1.0.14:all")
 }
 
 group = "lol.hyper"
 version = "1.4.3"
 description = "NoEndCrystals"
-java.sourceCompatibility = JavaVersion.VERSION_25
+java.sourceCompatibility = JavaVersion.VERSION_24
 
 tasks.withType<JavaCompile> {
     options.encoding = "UTF-8"
