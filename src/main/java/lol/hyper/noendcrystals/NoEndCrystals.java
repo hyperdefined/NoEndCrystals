@@ -63,11 +63,13 @@ public class NoEndCrystals extends JavaPlugin implements Listener {
         Bukkit.getServer().getPluginManager().registerEvents(endCrystalChecker, this);
         registerCommand("noendcrystals", commandNoEndCrystals);
 
-        HyperUpdater updater = new HyperUpdater(hyperLib);
-        updater.setGitHub("hyperdefined", "NoEndCrystals");
-        updater.setModrinth("Ejmd1WPZ");
-        updater.setHangar("NoEndCrystals", "paper");
-        updater.check();
+        if (config.getBoolean("check-updates", true)) {
+            HyperUpdater updater = new HyperUpdater(hyperLib);
+            updater.setGitHub("hyperdefined", "NoEndCrystals");
+            updater.setModrinth("Ejmd1WPZ");
+            updater.setHangar("NoEndCrystals", "paper");
+            updater.check();
+        }
     }
 
     public void loadConfig(File file) {
